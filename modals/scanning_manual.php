@@ -45,7 +45,7 @@
           </div>
           <div class="col-2">
             <label style="color: white; visibility: hidden;">Save</label>
-            <button type="button" class="btn btn-success btn-block" style="height: 50%; margin-top: 0;">Save</button>
+            <button type="button" id="save-btn" class="btn btn-success btn-block" style="height: 50%; margin-top: 0;">Save</button>
           </div>
         
         </div>
@@ -60,14 +60,13 @@
                 <td>Verified QTY</td>
               </tr>
             </thead>
-            <tbody style="text-align:center;" id="date_prev_scanned_initial"></tbody>
+            <tbody style="text-align:center;" id="saved-data"></tbody> 
           </table>
         </div>
       </div>
     </div>
   </div>
 </div>
-
 <script>
 function handleKeyPress(event) {
   if (event.key === 'Enter') {
@@ -75,6 +74,8 @@ function handleKeyPress(event) {
     const partCode = document.getElementById('part-code').value;
     if (partCode) {
       fetchPartData(partCode);
+   
+      $('#part-name').prop('disabled', true);
     }
   }
 }
@@ -86,18 +87,64 @@ function fetchPartData(partCode) {
     success: function(response) {
       const data = JSON.parse(response);
       if (data.length > 0) {
-        const partName = data[0].parts_name; // Corrected key name
+        const partName = data[0].parts_name;
         const quantity = data[0].quantity;
         $('#part-name').val(partName);
         $('#quantity').val(quantity);
       } else {
         $('#part-name').val(''); 
         $('#quantity').val('');
+        $('#save-btn').prop('disabled', true); 
         alert('Part not found!'); 
       }
     }
   });
 }
+$(document).ready(function() {
+ 
+  $('#save-btn').click(function() {
+    const partCode = document.getElementById('part-code').value;
+    const newQuantity = document.getElementById('quantity').value;
+    
+    
+    $.ajax({
+      url: 'process/update_quantity.php', 
+      type: 'POST',
+      data: { part_code: partCode, new_quantity: newQuantity },
+      success: function(response) {
 
+        if (response === 'No rows updated. Part code not found or quantity unchanged.') {
+        
+          $(`#saved-data tr[data-part-code="${partCode}"]`).remove();
+          alert(response);
+        } else {
+          alert(response); 
+          
+          $(`#saved-data tr[data-part-code="${partCode}"]`).remove();
 
+          const newRow = `<tr data-part-code="${partCode}">
+                            <td>${partCode}</td>
+                            <td>${$('#part-name').val()}</td>
+                            <td>${newQuantity}</td>
+                         </tr>`;
+          $('#saved-data').prepend(newRow);
+        }
+
+      
+        $('#part-code').val('');
+        $('#part-name').val('');
+        $('#quantity').val('');
+        $('#save-btn').prop('disabled', false); 
+        
+        
+        $('#part-name').prop('disabled', false);
+      },
+      error: function(xhr, status, error) {
+    
+        console.error(xhr.responseText);
+        alert('Error updating quantity. Please try again later.');
+      }
+    });
+  });
+});
 </script>
