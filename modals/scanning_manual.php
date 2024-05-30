@@ -1,10 +1,9 @@
-User
 <div class="modal fade" id="scanning_manual" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><b></b></h5>
+        <h5 class="modal-title" id="exampleModalLabel"><b>Manual Scanning</b></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -53,7 +52,6 @@ User
             <button type="button" id="save-btn" class="btn btn-success btn-block"
               style="height: 50%; margin-top: 0;">Save</button>
           </div>
-
         </div>
       </div>
       <div class="modal-footer">
@@ -64,6 +62,9 @@ User
                 <td>Part Code</td>
                 <td>Part Name</td>
                 <td>Verified QTY</td>
+                <td>Type</td>
+                <td>Section</td>
+                <td>Location</td>
               </tr>
             </thead>
             <tbody style="text-align:center;" id="saved-data"></tbody>
@@ -73,6 +74,15 @@ User
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
 <script>
   function handleKeyPress(event) {
     if (event.key === 'Enter') {
@@ -80,11 +90,11 @@ User
       const partCode = document.getElementById('part-code').value;
       if (partCode) {
         fetchPartData(partCode);
-
         $('#part-name').prop('disabled', true);
       }
     }
   }
+
   function fetchPartData(partCode) {
     $.ajax({
       url: 'process/fetch_part_data.php',
@@ -95,129 +105,76 @@ User
         if (data.length > 0) {
           const partName = data[0].parts_name;
           const quantity = data[0].quantity;
+
           $('#part-name').val(partName);
           $('#quantity').val(quantity);
+          $('#save-btn').prop('disabled', false); // Enable save button when data is fetched
         } else {
           $('#part-name').val('');
           $('#quantity').val('');
           $('#save-btn').prop('disabled', true);
           alert('Part not found!');
         }
+      },
+      error: function (xhr, status, error) {
+        console.error(xhr.responseText);
+        alert('Error fetching part data.');
       }
     });
   }
+
   $(document).ready(function () {
+  // Disable save button initially
+  $('#save-btn').prop('disabled', true);
 
-    // $('#save-btn').click(function() {
-    //   const partCode = document.getElementById('part-code').value;
-    //   const newQuantity = document.getElementById('quantity').value;
-
-
-    //   $.ajax({
-    //     url: 'process/update_quantity.php', 
-    //     type: 'POST',
-    //     data: { part_code: partCode, new_quantity: newQuantity },
-    //     success: function(response) {
-
-    //       if (response === 'No rows updated. Part code not found or quantity unchanged.') {
-
-    //         $(`#saved-data tr[data-part-code="${partCode}"]`).remove();
-    //         alert(response);
-    //       } else {
-    //         alert(response); 
-    //         $(`#saved-data tr[data-part-code="${partCode}"]`).remove();
-
-    //         const newRow = `<tr data-part-code="${partCode}">
-    //                           <td>${partCode}</td>
-    //                           <td>${$('#part-name').val()}</td>
-    //                           <td>${newQuantity}</td>
-    //                        </tr>`;
-    //         $('#saved-data').prepend(newRow);
-    //       }
-
-
-    //       $('#part-code').val('');
-    //       $('#part-name').val('');
-    //       $('#quantity').val('');
-    //       $('#save-btn').prop('disabled', false); 
-
-
-    //       $('#part-name').prop('disabled', false);
-    //     },
-    //     error: function(xhr, status, error) {
-
-    //       console.error(xhr.responseText);
-    //       alert('Error updating quantity. Please try again later.');
-    //     }
-    //   });
-    // });
-
-    $('#save-btn').click(function () {
-      const partCode = document.getElementById('part-code').value;
-      const partName = document.getElementById('part-name').value;
-      const newQuantity = document.getElementById('quantity').value;
-
-      $.ajax({
-        url: 'process/update_quantity.php',
-        type: 'POST',
-        data: { part_code: partCode, new_quantity: newQuantity, part_name: partName },
-        success: function (response) {
-          if (response === 'success') {
-            Swal.fire({
-              icon: 'success',
-              title: 'Successfully Recorded',
-              showConfirmButton: false,
-              timer: 1500
-            }).then(() => {
-              // Clear input fields
-              $('#part-code').val('');
-              $('#part-name').val('');
-              $('#quantity').val('');
-
-              // Update the table
-              const newRow = `<tr data-part-code="${partCode}">
-                            <td>${partCode}</td>
-                            <td>${partName}</td>
-                            <td>${newQuantity}</td>
-                         </tr>`;
-              $(`#saved-data tr[data-part-code="${partCode}"]`).remove();
-              $('#saved-data').prepend(newRow);
-            });
-          } else if (response === 'No rows updated. Part code not found or quantity unchanged.') {
-            Swal.fire({
-              icon: 'warning',
-              title: response,
-              showConfirmButton: true
-            }).then(() => {
-              $(`#saved-data tr[data-part-code="${partCode}"]`).remove();
-            });
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: response,
-              showConfirmButton: true
-            });
-          }
-
-          // Reset the form and re-enable buttons
-          $('#part-code').val('');
-          $('#part-name').val('');
-          $('#quantity').val('');
-          $('#save-btn').prop('disabled', false);
-          $('#part-name').prop('disabled', false);
-        },
-        error: function (xhr, status, error) {
-          console.error(xhr.responseText);
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Error updating quantity. Please try again later.',
-            showConfirmButton: true
-          });
-        }
-      });
-    });
-
+  $('#location_name_initial2').change(function () {
+    const locationSelected = $(this).val();
+    if (locationSelected) {
+      $('#part-code').prop('disabled', false);
+      // Enable save button if location is selected
+      $('#save-btn').prop('disabled', false);
+    } else {
+      $('#part-code').prop('disabled', true);
+      // Disable save button if no location is selected
+      $('#save-btn').prop('disabled', true);
+    }
   });
+
+  $('#save-btn').click(function () {
+    const partCode = document.getElementById('part-code').value;
+    const partName = document.getElementById('part-name').value;
+    const newQuantity = document.getElementById('quantity').value;
+
+    const inventoryType = $('#inventory_type').val();
+    const section = $('#section_initial2').val();
+    const location = $('#location_name_initial2').val();
+
+    // Simulate updating the table directly without database update
+    Swal.fire({
+      icon: 'success',
+      title: 'Successfully Recorded',
+      showConfirmButton: false,
+      timer: 1500
+    }).then(() => {
+      // Update the table
+      const newRow = `<tr data-part-code="${partCode}">
+                  <td>${partCode}</td>
+                  <td>${partName}</td>
+                  <td>${newQuantity}</td>
+                  <td>${inventoryType}</td>
+                  <td>${section}</td>
+                  <td>${location}</td>
+               </tr>`;
+      $(`#saved-data tr[data-part-code="${partCode}"]`).remove();
+      $('#saved-data').prepend(newRow);
+
+      // Clear input fields
+      $('#part-code').val('');
+      $('#part-name').val('');
+      $('#quantity').val('');
+      $('#part-name').prop('disabled', false);
+    });
+  });
+});
+
 </script>
