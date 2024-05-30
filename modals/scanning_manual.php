@@ -126,15 +126,16 @@
   $(document).ready(function () {
   // Disable save button initially
   $('#save-btn').prop('disabled', true);
+  $('#part-code').prop('disabled', true); // Disable part code initially
 
   $('#location_name_initial2').change(function () {
     const locationSelected = $(this).val();
     if (locationSelected) {
-      $('#part-code').prop('disabled', false);
+      $('#part-code').prop('disabled', false); // Enable part code if location is selected
       // Enable save button if location is selected
       $('#save-btn').prop('disabled', false);
     } else {
-      $('#part-code').prop('disabled', true);
+      $('#part-code').prop('disabled', true); // Disable part code if no location is selected
       // Disable save button if no location is selected
       $('#save-btn').prop('disabled', true);
     }
