@@ -134,7 +134,7 @@ User
     const inventoryType = $('#inventory_type').val();
     const section = $('#section_initial2').val();
     const location = $('#location_name_initial2').val();
-    
+
     // Check if any required field is empty
     if (partName !== '' && quantity !== '' && inventoryType !== '' && section !== '' && location !== '') {
       $('#save-btn').prop('disabled', false);
@@ -201,80 +201,75 @@ User
     });
 
     $('#clear-btn').click(function () {
-  // Clear the input fields
-  $('#part-code').val('');
-  $('#part-name').val('');
-  $('#quantity').val('');
+      // Clear the input fields
+      $('#part-code').val('');
+      $('#part-name').val('');
+      $('#quantity').val('');
 
-  // Reset the section and location dropdowns to their default values
-  $('#section_initial2').val('');
-  $('#location_name_initial2').val('');
+      // Reset the section and location dropdowns to their default values
+      $('#section_initial2').val('');
+      $('#location_name_initial2').val('');
 
-  // Clear the table content
-  $('#saved-data').empty();
+      // Clear the table content
+      $('#saved-data').empty();
 
-  // Ensure that Inventory Type and Part Name remain enabled
-  $('#inventory_type').prop('disabled', false);
-  $('#part-name').prop('disabled', false);
+      // Ensure that Inventory Type and Part Name remain enabled
+      $('#inventory_type').prop('disabled', false);
+      $('#part-name').prop('disabled', false);
 
-  // Validate the form after clearing
-  validateForm();
-});
+      // Validate the form after clearing
+      validateForm();
+    });
   });
-
-
-
-
-
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-Kmcd4Hzh9EDCXzftf8witAW1M32jOl4l/UfDl+s9dQI=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-  function handleKeyPress(event) {
+    function handleKeyPress(event) {
     if (event.key === 'Enter') {
       event.preventDefault();
-      const partCode = document.getElementById('part-code').value;
-      if (partCode) {
-        fetchPartData(partCode);
+    const partCode = document.getElementById('part-code').value;
+    if (partCode) {
+      fetchPartData(partCode);
       }
     }
   }
 
-  function fetchPartData(partCode) {
-    $.ajax({
-      url: 'process/fetch_part_data.php',
-      type: 'POST',
-      data: { part_code: partCode },
-      success: function (response) {
-        const data = JSON.parse(response);
-        if (data.length > 0) {
-          const partName = data[0].parts_name;
-          const quantity = data[0].quantity;
+    function fetchPartData(partCode) {
+      $.ajax({
+        url: 'process/fetch_part_data.php',
+        type: 'POST',
+        data: { part_code: partCode },
+        success: function (response) {
+          const data = JSON.parse(response);
+          if (data.length > 0) {
+            const partName = data[0].parts_name;
+            const quantity = data[0].quantity;
 
-          $('#part-name').val(partName);
-          $('#quantity').val(quantity);
-          validateForm(); // Check if form is valid to enable save button
-        } else {
-          $('#part-name').val('');
-          $('#quantity').val('');
-          validateForm(); // Check if form is valid to enable save button
-          alert('Part not found!');
+            $('#part-name').val(partName);
+            $('#quantity').val(quantity);
+            validateForm(); // Check if form is valid to enable save button
+          } else {
+            $('#part-name').val('');
+            $('#quantity').val('');
+            validateForm(); // Check if form is valid to enable save button
+            alert('Part not found!');
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error(xhr.responseText);
+          alert('Error fetching part data.');
         }
-      },
-      error: function (xhr, status, error) {
-        console.error(xhr.responseText);
-        alert('Error fetching part data.');
-      }
-    });
+      });
   }
 
-  function validateForm() {
+    function validateForm() {
     const partName = $('#part-name').val().trim();
     const quantity = $('#quantity').val().trim();
     const inventoryType = $('#inventory_type').val();
     const section = $('#section_initial2').val();
     const location = $('#location_name_initial2').val();
-    
+
     // Check if any required field is empty
     if (partName !== '' && quantity !== '' && inventoryType !== '' && section !== '' && location !== '') {
       $('#save-btn').prop('disabled', false);
@@ -283,19 +278,19 @@ User
     }
   }
 
-  $(document).ready(function () {
-    // Disable save button initially
-    $('#save-btn').prop('disabled', true);
+    $(document).ready(function () {
+      // Disable save button initially
+      $('#save-btn').prop('disabled', true);
     $('#part-code').prop('disabled', true); // Disable part code initially
 
     $('#location_name_initial2').change(function () {
       const locationSelected = $(this).val();
-      if (locationSelected) {
-        $('#part-code').prop('disabled', false); // Enable part code if location is selected
-        validateForm(); // Validate form on location change
+    if (locationSelected) {
+      $('#part-code').prop('disabled', false); // Enable part code if location is selected
+    validateForm(); // Validate form on location change
       } else {
-        $('#part-code').prop('disabled', true); // Disable part code if no location is selected
-        $('#save-btn').prop('disabled', true); // Disable save button if no location is selected
+      $('#part-code').prop('disabled', true); // Disable part code if no location is selected
+    $('#save-btn').prop('disabled', true); // Disable save button if no location is selected
       }
     });
 
@@ -318,69 +313,75 @@ User
 
     // Send data to PHP script using AJAX
     $.ajax({
-        url: 'process/save_to_database.php', // Path to your PHP script
-        method: 'POST',
-        data: {
-            partCode: partCode,
-            partName: partName,
-            newQuantity: newQuantity,
-            inventoryType: inventoryType,
-            section: section,
-            location: location,
-            pcname: pcname,
-            ip: ip,
-            formattedDateTime: formattedDateTime
-        },
-        success: function (response) {
-            // Handle success response
-            console.log(response); // Log response for debugging
-            // Add the new row to the table (optional)
-            const newRow = `<tr data-part-code="${partCode}">
-                  <td>${partCode}</td>
-                  <td>${partName}</td>
-                  <td>${newQuantity}</td>
-                  <td>${inventoryType}</td>
-                  <td>${section}</td>
-                  <td>${location}</td>
-                  <td>${pcname}</td>
-                  <td>${ip}</td>
-                  <td>${formattedDateTime}</td>
-               </tr>`;
-            $(`#saved-data tr[data-part-code="${partCode}"]`).remove();
-            $('#saved-data').prepend(newRow);
-        },
-        error: function (xhr, status, error) {
-            // Handle error
-            console.error(xhr.responseText);
-            alert('Error saving data to database.');
-        }
-    });
+      url: 'process/save_to_database.php', // Path to your PHP script
+    method: 'POST',
+    data: {
+      partCode: partCode,
+    partName: partName,
+    newQuantity: newQuantity,
+    inventoryType: inventoryType,
+    section: section,
+    location: location,
+    pcname: pcname,
+    ip: ip,
+    formattedDateTime: formattedDateTime
+            },
+    success: function (response) {
+      // Handle success response
+      console.log(response); // Log response for debugging
+
+    Swal.fire({
+      icon: 'success',
+    title: 'Successfully Recorded',
+    showConfirmButton: false,
+    timer: 1500
+                }).then(() => {
+                    const newRow = `<tr data-part-code="${partCode}">
+      <td>${partCode}</td>
+      <td>${partName}</td>
+      <td>${newQuantity}</td>
+      <td>${inventoryType}</td>
+      <td>${section}</td>
+      <td>${location}</td>
+      <td>${pcname}</td>
+      <td>${ip}</td>
+      <td>${formattedDateTime}</td>
+    </tr>`;
+    $(`#saved-data tr[data-part-code="${partCode}"]`).remove();
+    $('#saved-data').prepend(newRow);
+                });
+            },
+    error: function (xhr, status, error) {
+      // Handle error
+      console.error(xhr.responseText);
+    alert('Error saving data to database.');
+            }
+        });
 });
 
 
     $('#clear-btn').click(function () {
-  // Clear the input fields
-  $('#part-code').val('');
-  $('#part-name').val('');
-  $('#quantity').val('');
+      // Clear the input fields
+      $('#part-code').val('');
+    $('#part-name').val('');
+    $('#quantity').val('');
 
-  // Reset the inventory dropdown to the default option
-  $('#inventory_type').val('');
+    // Reset the inventory dropdown to the default option
+    $('#inventory_type').val('');
 
-  // Reset the section and location dropdowns to their default values
-  $('#section_initial2').val('');
-  $('#location_name_initial2').val('');
+    // Reset the section and location dropdowns to their default values
+    $('#section_initial2').val('');
+    $('#location_name_initial2').val('');
 
-  // Clear the table content
-  $('#saved-data').empty();
+    // Clear the table content
+    $('#saved-data').empty();
 
-  // Ensure that Inventory Type and Part Name remain enabled
-  $('#inventory_type').prop('disabled', false);
-  $('#part-name').prop('disabled', false);
+    // Ensure that Inventory Type and Part Name remain enabled
+    $('#inventory_type').prop('disabled', false);
+    $('#part-name').prop('disabled', false);
 
-  // Validate the form after clearing
-  validateForm();
+    // Validate the form after clearing
+    validateForm();
 });
   });
 </script>
-

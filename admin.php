@@ -232,6 +232,11 @@ if($role = 'admin'){
       <b>Version</b> 2.0.0
     </div>
   </footer>
+
+
+
+
+  
 <?php 
 include 'modals/logout.php';
 ?>
