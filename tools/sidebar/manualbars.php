@@ -13,7 +13,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
      
         <li class="nav-item">
-            <a href="parts.php" class="nav-link ">
+            <a href="parts.php" class="nav-link">
               <i class="fa fa-barcode"></i>
               <p>
                 Parts
@@ -21,13 +21,26 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="scanned_manual.php" class="nav-link active">
+            <a href="scanned_manual.php" class="nav-link active ">
             <i class="fas fa-list"></i>
                           <p>
               List of Scanned
               </p>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a href="index.php" class="nav-link">
+            <i class="fas fa-sign-out-alt"></i>
+
+                          <p>
+            Menu
+              </p>
+            </a>
+          </li>
+
+
+
           </li>  
         </ul>
       </nav>

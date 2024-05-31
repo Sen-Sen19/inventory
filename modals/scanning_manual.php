@@ -1,3 +1,4 @@
+User
 <div class="modal fade" id="scanning_manual" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
@@ -220,9 +221,14 @@
   validateForm();
 });
   });
+
+
+
+
+
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-Kmcd4Hzh9EDCXzftf8witAW1M32jOl4l/UfDl+s9dQI=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script>
   function handleKeyPress(event) {
     if (event.key === 'Enter') {
@@ -230,7 +236,6 @@
       const partCode = document.getElementById('part-code').value;
       if (partCode) {
         fetchPartData(partCode);
-        $('#part-name').prop('disabled', true);
       }
     }
   }
@@ -297,92 +302,85 @@
     $('#part-name, #quantity').on('input', validateForm); // Check form validity on input change
 
     $('#save-btn').click(function () {
-      const partCode = document.getElementById('part-code').value;
-      const partName = document.getElementById('part-name').value;
-      const newQuantity = document.getElementById('quantity').value;
+    const partCode = document.getElementById('part-code').value;
+    const partName = document.getElementById('part-name').value;
+    const newQuantity = document.getElementById('quantity').value;
 
-      const inventoryType = $('#inventory_type').val();
-      const section = $('#section_initial2').val();
-      const location = $('#location_name_initial2').val();
+    const inventoryType = $('#inventory_type').val();
+    const section = $('#section_initial2').val();
+    const location = $('#location_name_initial2').val();
 
-      const pcname = $('#pcname').val();
-      const ip = $('#ip').val();
+    const pcname = $('#pcname').val();
+    const ip = $('#ip').val();
 
-      // Get current date and time
-      const now = new Date();
-      const formattedDateTime = now.toLocaleString(); // Format the date and time
+    const now = new Date();
+    const formattedDateTime = now.toLocaleString();
 
-      // Send data to insert_data.php using AJAX
-      $.ajax({
-        url: 'process/insert_data.php',
-        type: 'POST',
+    // Send data to PHP script using AJAX
+    $.ajax({
+        url: 'process/save_to_database.php', // Path to your PHP script
+        method: 'POST',
         data: {
-          partCode: partCode,
-          partName: partName,
-          newQuantity: newQuantity,
-          inventoryType: inventoryType,
-          section: section,
-          location: location,
-          pcname: pcname,
-          ip: ip,
-          formattedDateTime: formattedDateTime
+            partCode: partCode,
+            partName: partName,
+            newQuantity: newQuantity,
+            inventoryType: inventoryType,
+            section: section,
+            location: location,
+            pcname: pcname,
+            ip: ip,
+            formattedDateTime: formattedDateTime
         },
         success: function (response) {
-          const res = JSON.parse(response);
-          if (res.success) {
-            // Show success message
-            Swal.fire({
-              icon: 'success',
-              title: 'Successfully Recorded',
-              showConfirmButton: false,
-              timer: 1500
-            }).then(() => {
-              // Update the table
-              const newRow = `<tr data-part-code="${partCode}">
-                                <td>${partCode}</td>
-                                <td>${partName}</td>
-                                <td>${newQuantity}</td>
-                                <td>${inventoryType}</td>
-                                <td>${section}</td>
-                                <td>${location}</td>
-                                <td>${pcname}</td>
-                                <td>${ip}</td>
-                                <td>${formattedDateTime}</td>
-                             </tr>`;
-              $(`#saved-data tr[data-part-code="${partCode}"]`).remove();
-              $('#saved-data').prepend(newRow);
-            });
-          } else {
-            // Show error message
-            alert('Failed to record data.');
-          }
+            // Handle success response
+            console.log(response); // Log response for debugging
+            // Add the new row to the table (optional)
+            const newRow = `<tr data-part-code="${partCode}">
+                  <td>${partCode}</td>
+                  <td>${partName}</td>
+                  <td>${newQuantity}</td>
+                  <td>${inventoryType}</td>
+                  <td>${section}</td>
+                  <td>${location}</td>
+                  <td>${pcname}</td>
+                  <td>${ip}</td>
+                  <td>${formattedDateTime}</td>
+               </tr>`;
+            $(`#saved-data tr[data-part-code="${partCode}"]`).remove();
+            $('#saved-data').prepend(newRow);
         },
         error: function (xhr, status, error) {
-          console.error(xhr.responseText);
-          alert('Error recording data.');
+            // Handle error
+            console.error(xhr.responseText);
+            alert('Error saving data to database.');
         }
-      });
     });
+});
+
 
     $('#clear-btn').click(function () {
-      // Clear the input fields
-      $('#part-code').val('');
-      $('#part-name').val('');
-      $('#quantity').val('');
+  // Clear the input fields
+  $('#part-code').val('');
+  $('#part-name').val('');
+  $('#quantity').val('');
 
-      // Reset the section and location dropdowns to their default values
-      $('#section_initial2').val('');
-      $('#location_name_initial2').val('');
+  // Reset the inventory dropdown to the default option
+  $('#inventory_type').val('');
 
-      // Clear the table content
-      $('#saved-data').empty();
+  // Reset the section and location dropdowns to their default values
+  $('#section_initial2').val('');
+  $('#location_name_initial2').val('');
 
-      // Ensure that Inventory Type and Part Name remain enabled
-      $('#inventory_type').prop('disabled', false);
-      $('#part-name').prop('disabled', false);
+  // Clear the table content
+  $('#saved-data').empty();
 
-      // Validate the form after clearing
-      validateForm();
-    });
+  // Ensure that Inventory Type and Part Name remain enabled
+  $('#inventory_type').prop('disabled', false);
+  $('#part-name').prop('disabled', false);
+
+  // Validate the form after clearing
+  validateForm();
+});
   });
 </script>
+

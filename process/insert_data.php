@@ -3,10 +3,11 @@
 include 'conn.php';
 
 // Retrieve data from the AJAX request
+// Retrieve data from the AJAX request
 $partCode = $_POST['partCode'];
 $partName = $_POST['partName'];
 $newQuantity = $_POST['newQuantity'];
-$inventoryType = $_POST['inventoryType'];
+$inventoryType = $_POST['inventoryType']; // Retrieve inventory type
 $section = $_POST['section'];
 $location = $_POST['location'];
 $pcname = $_POST['pcname'];
@@ -19,39 +20,38 @@ try {
     // Start a transaction
     $conn->beginTransaction();
 
-    // Update the database with the new data
-    $sqlUpdate = "UPDATE manual_inventory 
-                  SET partsname = :partName, 
-                      quantity = :newQuantity, 
-                      scan_date_time = :scanDateTime, 
-                      section = :section, 
-                      location = :location, 
-                      ip_address = :ip, 
-                      pc_name = :pcname, 
-                      verified_qty = :verifiedQty 
-                  WHERE partscode = :partCode";
+    // Prepare SQL query
+    $sql = "INSERT INTO manual_inventory (partscode, partsname, quantity, scan_date_time, section, location, ip_address, pc_name, verified_qty, inventory_type) 
+            VALUES (:partCode, :partName, :newQuantity, :scanDateTime, :section,:inventoryType, :location, :ip, :pcname, :verifiedQty, :inventoryType)";
+    
+    // Prepare statement
+    $stmt = $conn->prepare($sql);
+    
+    // Bind parameters
+    $stmt->bindParam(':partCode', $partCode);
+    $stmt->bindParam(':partName', $partName);
+    $stmt->bindParam(':newQuantity', $newQuantity);
+    $stmt->bindParam(':scanDateTime', $now);
+    $stmt->bindParam(':section', $section);
+    $stmt->bindParam(':inventoryType', $inventoryType); // Bind inventory type
+    $stmt->bindParam(':location', $location);
+    $stmt->bindParam(':ip', $ip);
+    $stmt->bindParam(':pcname', $pcname);
+    $stmt->bindParam(':verifiedQty', $newQuantity);
+ 
+    
+    // Execute statement
+    $stmt->execute();
 
-    $stmtUpdate = $conn->prepare($sqlUpdate);
-    $stmtUpdate->bindParam(':partCode', $partCode);
-    $stmtUpdate->bindParam(':partName', $partName);
-    $stmtUpdate->bindParam(':newQuantity', $newQuantity);
-    $stmtUpdate->bindParam(':scanDateTime', $now);
-    $stmtUpdate->bindParam(':section', $section);
-    $stmtUpdate->bindParam(':location', $location);
-    $stmtUpdate->bindParam(':ip', $ip);
-    $stmtUpdate->bindParam(':pcname', $pcname);
-    $stmtUpdate->bindParam(':verifiedQty', $newQuantity);
-    $stmtUpdate->execute();
-
-
+    // Commit transaction
     $conn->commit();
 
-    
+    // Return success response
     echo json_encode(array('success' => true));
 } catch (PDOException $e) {
-   
+    // Roll back transaction and return error response
     $conn->rollBack();
-    
     echo json_encode(array('success' => false, 'message' => 'Error updating data: ' . $e->getMessage()));
 }
+
 ?>

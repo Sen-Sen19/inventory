@@ -149,7 +149,10 @@ if($role = 'admin'){
       </div>
     </section>
 
-    <!-- Main content -->
+
+
+
+
     <section class="content">
       <div class="container-fluid">
         <div class="row">
@@ -180,19 +183,22 @@ if($role = 'admin'){
                   </div>
                 </h3>
               </div>
-              <!-- /.card-header -->
+
+
+
+
+
               <div class="card-body table-responsive p-0" style="height: 500px;">
                 <table class="table table-head-fixed text-nowrap table-hover">
                 <thead style="text-align:center;">
-                  <th>#</td>
-                  <th>Inventory Tag No</th>
-                  <th>Location Code</th>
-                  <th>Part Code</th>
-                  <th>Part Name</th>
-                  <th>Physical Count</th>
-                  <th>Verified QTY</th>
-                  <th>Length</th>
+                  <th>ID</td>
+                  <th>Parts Code</th>
+                  <th>Parts Name</th>
+                  <th>Date and Time</th>
                   <th>Section</th>
+                  <th>Location</th>
+                  <th>Inventory Type</th>
+              
                 </thead>
                 <tbody id="list_of_scanned_admin" style="text-align:center;"></tbody>
                 </table>
@@ -219,9 +225,28 @@ if($role = 'admin'){
           </div>
           <!--/.col (right) -->
         </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
     <!-- /.content -->
   </div>
 
@@ -252,30 +277,6 @@ include 'modals/logout.php';
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.js"></script>
 
-<script type="text/javascript">
-$( document ).ready(function() {
-    load_admin();
-});
 
-const load_admin =()=>{
-  $('#spinner').css('display','block');
-    
-    $.ajax({
-        url:'process/processor_admin.php',
-        type: 'POST',
-        cache: false,
-        data:{
-            method: 'fetch_inventory',
-        },success:function(response) {
-           document.getElementById('list_of_scanned_admin').innerHTML = response;
-           $('#spinner').fadeOut();
-        }
-    });
-}
-
-const export_admin =()=>{
-  window.open('process/export_scanned_admin.php');
-}
-</script>
 </body>
 </html>
