@@ -1,3 +1,5 @@
+
+
 <script type="text/javascript">
 $( document ).ready(function() {
     get_client_pc_info();
@@ -217,7 +219,7 @@ const update_qty =()=>{
             if (response == 'success') {
                 Swal.fire({
                       icon: 'success',
-                      title: 'Succesfully Updated!!!',
+                      title: 'Succesfully Updated!!!'
                       text: 'Success',
                       showConfirmButton: false,
                       timer : 1000

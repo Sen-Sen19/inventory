@@ -62,5 +62,6 @@ include 'process/conn2.php';
 
 <?php
 include 'tools/manual_footer.php';
+
 include 'tools/javascript/manual_script.php';
 ?>

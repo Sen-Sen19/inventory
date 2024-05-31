@@ -1,6 +1,6 @@
 <?php
 include 'conn5.php'; // Include the MySQL connection file
-include 'conn.php';
+include 'conn2.php';
 
 // SQL Server database connection
 $pdo_sql_server = new PDO('sqlsrv:Server=172.25.114.162\\SQLEXPRESS;Database=new_ekanban', 'SA', 'SystemGroup2018');
@@ -26,4 +26,3 @@ if (isset($_POST['part_code'])) {
     echo json_encode($merged_result);
 }
 ?>
-    
