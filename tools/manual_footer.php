@@ -1,10 +1,10 @@
-<!-- <footer class="main-footer">
+<footer class="main-footer">
     <strong>Copyright &copy; 2024. Developed by: M.N Omabtang</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 1.0.0
     </div>
-  </footer> -->
+  </footer>
 <?php 
 include 'modals/scanning.php';
 include 'modals/scanning_initial.php';

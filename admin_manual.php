@@ -9,6 +9,9 @@ if ($role = 'admin') {
   header('location: ../../index.php');
 }
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,6 +27,8 @@ if ($role = 'admin') {
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
   <style>
+
+
     .loader {
       border: 16px solid #f3f3f3;
       border-radius: 50%;
@@ -43,6 +48,49 @@ if ($role = 'admin') {
         transform: rotate(1080deg);
       }
     }
+
+
+    .pagination-section {
+  margin-top: 20px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.pagination .page-link {
+  color: #007bff;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  margin: 0 3px;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.pagination .page-link:hover {
+  z-index: 2;
+  color: #0056b3;
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+.pagination .page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  cursor: auto;
+  background-color: #fff;
+  border-color: #dee2e6;
+}
+    
+    
   </style>
 </head>
 
@@ -202,30 +250,19 @@ if ($role = 'admin') {
                           <div class="card-body table-responsive p-0" style="height: 500px;">
                             <table class="table table-head-fixed text-nowrap table-hover">
                               <thead style="text-align:center;">
-                                <th>ID</td>
+                                <th>ID</th>
                                 <th>Parts Code</th>
                                 <th>Parts Name</th>
                                 <th>Date and Time</th>
                                 <th>Section</th>
                                 <th>Location</th>
                                 <th>Verified Quantity</th>
-
-
                               </thead>
                               <tbody id="list_of_scanned_admin" style="text-align:center;">
                                 <?php include 'process/admin_manual_fetch.php'; ?>
-                                <!-- Include PHP code to fetch and display data -->
+                              
                               </tbody>
-
                             </table>
-                            <div class="row">
-                              <div class="col-6"></div>
-                              <div class="col-6">
-                                <div class="spinner" id="spinner" style="display:none;">
-                                  <div class="loader float-sm-center"></div>
-                                </div>
-                              </div>
-                            </div>
                           </div>
                           <!-- /.card-body -->
                         </div>
@@ -241,50 +278,81 @@ if ($role = 'admin') {
             </div>
             <!--/.col (right) -->
           </div>
-
-
-
-          <!-- /.content -->
         </div>
+        <!-- Pagination Section -->
+<div class="pagination-section">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+                   <!-- Current page number -->
+       
+          <li class="page-item active">
+            <span class="page-link"><?php echo $current_page; ?></span>
+          </li>
+   <!-- Previous page button -->
 
-        <footer class="main-footer">
-          <strong>Copyright &copy; 2024. Developed by: M.Omabtang</strong>
-          All rights reserved.
-          <div class="float-right d-none d-sm-inline-block">
-            <b>Version</b> 1.0.0
-          </div>
-        </footer>
-
-
-
-        
-        <?php
-        include 'modals/logout.php';
-        ?>
-        <!-- jQuery -->
-        <script src="plugins/jquery/dist/jquery.min.js"></script>
-        <!-- jQuery UI 1.11.4 -->
-        <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
-        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-        <script>
-          $.widget.bridge('uibutton', $.ui.button)
-        </script>
-        <!-- Bootstrap 4 -->
-        <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <!-- overlayScrollbars -->
-        <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-        <!-- SweetAlert2 -->
-        <script type="text/javascript" src="plugins/sweetalert2/dist/sweetalert2.min.js"></script>
-        <!-- AdminLTE App -->
-        <script src="dist/js/adminlte.js"></script>
-
-        <script type="text/javascript">
-          const export_admin_manual = () => {
-            window.open('process/export_scanned_manual.php');
-          }
-        </script>
+          <li class="page-item <?php echo ($current_page == 1) ? 'disabled' : ''; ?>">
+            <a class="page-link" href="admin_manual.php?page=<?php echo $current_page - 1; ?>"><<</a>
+          </li>
+ 
+          
+          <!-- Next page button -->
+          <li class="page-item <?php echo ($current_page == $total_pages) ? 'disabled' : ''; ?>">
+            <a class="page-link" href="admin_manual.php?page=<?php echo $current_page + 1; ?>">>></a>
+          </li>
+          <!-- Last page number -->
+          <li class="page-item <?php echo ($current_page == $total_pages) ? 'disabled' : ''; ?>">
+            <a class="page-link" href="admin_manual.php?page=<?php echo $total_pages; ?>"><?php echo $total_pages; ?></a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+<!-- End Pagination Section -->
+      </section>
+      <!-- /.content -->
+    </div>
 
 
-</body>
 
-</html>
+
+
+    <footer class="main-footer">
+      <strong>Copyright &copy; 2024. Developed by: M.Omabtang</strong>
+      All rights reserved.
+      <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 1.0.0
+      </div>
+    </footer>
+    <?php
+    include 'modals/logout.php';
+    ?>
+    <!-- jQuery -->
+    <script src="plugins/jquery/dist/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+      $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <!-- Bootstrap 4 -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script type="text/javascript" src="plugins/sweetalert2/dist/sweetalert2.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.js"></script>
+
+    <script type="text/javascript">
+      const export_admin_manual = () => {
+        window.open('process/export_scanned_manual.php');
+      }
+    </script>
+
+  </body>
+
+  </html>
+
