@@ -166,12 +166,6 @@ if ($role = 'admin') {
                   </p>
                 </a>
             </li>
-
-
-
-
-
-
             <li class="nav-item">
               <a href="#" class="nav-link" data-toggle="modal" data-target="#logout-modal">
                 <i class="nav-icon far fa-circle text-danger"></i>
@@ -238,7 +232,31 @@ if ($role = 'admin') {
                                     <a href="#" class="btn btn-success" onclick="export_admin_manual()">Export
                                       Data&ensp;<i class="fas fa-download"></i></a>
                                   </div>
+                               
+                               
+                                  <div class="float-right" style="margin-right: 20px;">
+        <a href="#" class="btn btn-warning" onclick="refreshPage()">
+            Refresh&ensp;<i class="fas fa-undo"></i>
+        </a>
+    </div>
+
+    <div style="display: flex; align-items: center;">
+    <form action="#" method="get" class="form-inline" style="display: flex;">
+        <input type="text" id="search-input" class="form-control" placeholder="Search" style="max-width: 200px;margin-right: 20px;">
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+</div>
+
+
+
+
+
+
+    
                                 </div>
+                                
                               </div>
                             </h3>
                           </div>
@@ -264,22 +282,21 @@ if ($role = 'admin') {
                               </tbody>
                             </table>
                           </div>
-                          <!-- /.card-body -->
+ 
                         </div>
-                        <!-- /.card -->
+                     
                       </div>
                     </div>
 
                   </div>
-                  <!-- /.card-body -->
+           
                 </form>
               </div>
-              <!-- /.card -->
+ 
             </div>
-            <!--/.col (right) -->
+
           </div>
         </div>
-        <!-- Pagination Section -->
 <div class="pagination-section">
   <div class="container-fluid">
     <div class="row justify-content-start">
@@ -316,7 +333,7 @@ if ($role = 'admin') {
   </div>
  
 </div>
-<!-- End Pagination Section -->
+
       </section>
       <!-- /.content -->
     </div>
@@ -335,27 +352,31 @@ if ($role = 'admin') {
     <?php
     include 'modals/logout.php';
     ?>
-    <!-- jQuery -->
+
     <script src="plugins/jquery/dist/jquery.min.js"></script>
-    <!-- jQuery UI 1.11.4 -->
+
     <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    
     <script>
       $.widget.bridge('uibutton', $.ui.button)
     </script>
-    <!-- Bootstrap 4 -->
+
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- overlayScrollbars -->
+
     <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-    <!-- SweetAlert2 -->
+
     <script type="text/javascript" src="plugins/sweetalert2/dist/sweetalert2.min.js"></script>
-    <!-- AdminLTE App -->
+
     <script src="dist/js/adminlte.js"></script>
 
     <script type="text/javascript">
       const export_admin_manual = () => {
         window.open('process/export_scanned_manual.php');
       }
+      function refreshPage() {
+            location.reload();
+        }
+        
     </script>
 
   </body>
