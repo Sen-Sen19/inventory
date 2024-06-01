@@ -6,7 +6,7 @@ include 'conn.php';
 $records_per_page = 10;
 
 
-$current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 if ($current_page <= 0) {
     $current_page = 1;
 }

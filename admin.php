@@ -93,7 +93,7 @@ if($role = 'admin'){
           <?php } else {?>
           <a href="admin.php" class="nav-link">
           <?php } ?>
-            <i class="nav-icon fas fa-bus"></i>
+          <i class="fa fa-barcode"></i>
             <p>
               List of Scanned
             </p>

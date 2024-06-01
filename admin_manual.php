@@ -305,10 +305,16 @@ if ($role = 'admin') {
           <li class="page-item <?php echo ($current_page == $total_pages) ? 'disabled' : ''; ?>">
             <a class="page-link" href="admin_manual.php?page=<?php echo $total_pages; ?>"><?php echo $total_pages; ?></a>
           </li>
+          <div class="total-data-count" style="float: right; margin-left: 20px;">
+    Total Data: <?php echo $total_records; ?>
+  </div>
         </ul>
+        
       </nav>
     </div>
+    
   </div>
+ 
 </div>
 <!-- End Pagination Section -->
       </section>
