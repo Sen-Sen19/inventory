@@ -98,8 +98,6 @@
 
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-Kmcd4Hzh9EDCXzftf8witAW1M32jOl4l/UfDl+s9dQI=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function handleKeyPress(event) {
     if (event.key === 'Enter') {

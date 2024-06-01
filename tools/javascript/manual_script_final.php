@@ -241,4 +241,9 @@ const update_qty =()=>{
     });
     }
 }
+
+
+
+
+
 </script>

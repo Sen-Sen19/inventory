@@ -3,7 +3,7 @@
 include 'conn.php';
 
 // Number of records per page
-$records_per_page = 10;
+$records_per_page = 50;
 
 // Get the current page number from the URL, default to page 1 if not set
 $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -42,29 +42,16 @@ try {
         echo "<tr><td colspan='7'>No results found</td></tr>";
     }
 
-    // Get the total number of records
+  
     $total_records_sql = "SELECT COUNT(*) FROM manual_inventory";
     $total_records_stmt = $conn->query($total_records_sql);
     $total_records = $total_records_stmt->fetchColumn();
 
-    // Calculate the total number of pages
     $total_pages = ceil($total_records / $records_per_page);
 
-    // Commented out pagination buttons to hide them
-    /*
-    if ($total_pages > 1) {
-        echo "<tr><td colspan='7'>";
-        echo "<nav><ul class='pagination justify-content-center'>";
-        for ($i = 1; $i <= $total_pages; $i++) {
-            $active = ($i == $current_page) ? 'active' : '';
-            echo "<li class='page-item $active'><a class='page-link' href='admin_manual.php?page=$i'>$i</a></li>";
-        }
-        echo "</ul></nav>";
-        echo "</td></tr>";
-    }
-    */
+   
 } catch (PDOException $e) {
-    // Handle errors
+  
     echo "Error: " . $e->getMessage();
 }
 

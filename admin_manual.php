@@ -282,7 +282,7 @@ if ($role = 'admin') {
         <!-- Pagination Section -->
 <div class="pagination-section">
   <div class="container-fluid">
-    <div class="row justify-content-center">
+    <div class="row justify-content-start">
       <nav aria-label="Page navigation">
         <ul class="pagination">
                    <!-- Current page number -->
