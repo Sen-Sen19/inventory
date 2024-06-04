@@ -1,32 +1,32 @@
 <?php
-// Include the database connection file
+
 include 'conn.php';
 
-// Number of records per page
+
 $records_per_page = 50;
 
-// Get the current page number from the URL, default to page 1 if not set
+
 $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 if ($current_page <= 0) {
     $current_page = 1;
 }
 
-// Calculate the starting record
+
 $start_from = ($current_page - 1) * $records_per_page;
 
 try {
-    // Prepare SQL query to select data from the manual_inventory table with limit and offset
+ 
     $sql = "SELECT * FROM manual_inventory LIMIT :start_from, :records_per_page";
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':start_from', $start_from, PDO::PARAM_INT);
     $stmt->bindParam(':records_per_page', $records_per_page, PDO::PARAM_INT);
 
-    // Execute query
+  
     $stmt->execute();
 
-    // Check if any rows were returned
+   
     if ($stmt->rowCount() > 0) {
-        // Output data of each row
+    
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             echo "<tr>";
             echo "<td>" . $row['id'] . "</td>";

@@ -42,7 +42,7 @@
 <div class="card-body">
  <div class="row">
  	<div class="col-12">
- 		<a href="#" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#scanning_manual">Scanning of Barcode</a>
+ 		<a href="#" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#scanning_initial">Scanning of Barcode</a>
  	</div>
  </div>
 </div>

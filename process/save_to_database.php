@@ -1,8 +1,8 @@
 <?php
-// Include your database connection file
+
 include 'conn.php';
 
-// Retrieve data from AJAX request
+
 $partCode = $_POST['partCode'];
 $partName = $_POST['partName'];
 $newQuantity = $_POST['newQuantity'];
@@ -13,11 +13,10 @@ $pcname = $_POST['pcname'];
 $ip = $_POST['ip'];
 $formattedDateTime = $_POST['formattedDateTime'];
 
-// Prepare SQL statement
 $sql = "INSERT INTO manual_inventory (partscode, partsname, verified_qty, scan_date_time,inventory_type, section, location, ip_address, pc_name) 
         VALUES (:partscode, :partsname, :verified_qty, :scan_date_time,:inventory_type, :section, :location, :ip_address, :pc_name)";
 
-// Prepare and execute the statement
+
 $stmt = $conn->prepare($sql);
 $stmt->execute([
     ':partscode' => $partCode,

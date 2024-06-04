@@ -11,11 +11,22 @@ include 'process/conn2.php';
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Barcode Scanning</title>
-  <!-- Include jQuery -->
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <style>
+  .h1 {
+
+  
+    overflow: hidden;
+    width: 80%;
+    max-width: 100%;
+    font-size: 30px;
+    margin: 20px 100px 50px 15%;
+  }
+
+
   .form-container {
     background-color: white;
     border-radius: 8px;
@@ -43,18 +54,20 @@ include 'process/conn2.php';
     padding: 10px 0;
     font-size: 16px;
   }
+  
 </style>
 
 <body>
+  <h1 class="h1" style="margin-bottom:50px;">Manual Input</h1>
 
   <div class="form-container">
+
     <div class="form-header"></div>
     <form>
       <div class="card-body">
         <div class="row">
           <div class="col-6">
-            <a href="#" class="btn btn-primary wide-button" data-toggle="modal" data-target="#scanning_manual">Manual
-              Input</a>
+            <a href="#" class="btn btn-primary wide-button" data-toggle="modal" data-target="#scanning_manual">Manual Input</a>
           </div>
         </div>
       </div>

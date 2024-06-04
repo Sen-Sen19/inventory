@@ -5,13 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Inventory | System</title>
   <link rel="icon" href="dist/img/logo.png" type="image/x-icon" />
-  <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="dist/css/font.min.css">
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-  <!-- Ekko Lightbox -->
-  <!-- <link rel="stylesheet  " href="plugins/ekko-lightbox/ekko-lightbox.css"> -->
-  <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
 <body>
@@ -27,11 +22,10 @@
         </div>
           <div class="card-body">
             <div class="row">
-
               <div class="col-lg-4 col-md-4 col-sm-4">
                 <div class="card card-secondary">
                   <div class="card-header">
-                    <h3 class="card-title col-12" style="text-align:center; font-size: 50px;"><b>INVENTORY FOR INITIAL</b></h3>
+                    <h3 class="card-title col-12" style="text-align:center; font-size: 60px;"><b>INVENTORY FOR INITIAL</b></h3>
                   </div>
                 <div class="card-body">
                   <div class="col-12">
@@ -42,11 +36,10 @@
                 </div>
                 </div>
               </div>
-
               <div class="col-lg-4 col-md-4 col-sm-4">
                 <div class="card card-primary">
                   <div class="card-header">
-                    <h3 class="card-title col-12" style="text-align:center; font-size: 50px;"><b>INVENTORY FOR FINAL</b></h3>
+                    <h3 class="card-title col-12" style="text-align:center; font-size: 60px;"><b>INVENTORY FOR FINAL</b></h3>
                   </div>
                 <div class="card-body">
                   <div class="col-12" style="text-align:center;">
@@ -55,16 +48,11 @@
                 </div>
                 </div>
               </div>
-
-
-
-
-              
               <!-- Revisions (Sen) -->
               <div class="col-lg-4 col-md-4 col-sm-4">
                 <div class="card card-success" >
                   <div class="card-header ">
-                    <h3 class="card-title col-12" style="text-align:center; font-size: 50px;"><b>INVENTORY FOR MANUAL</b></h3>
+                    <h3 class="card-title col-12" style="text-align:center; font-size: 60px;"><b>INVENTORY FOR MANUAL</b></h3>
                   </div>
                 <div class="card-body">
                   <div class="col-12">
@@ -75,10 +63,6 @@
                 </div>
                 </div>
               </div>
-
-
-
-
             </div>
           </div>
         </div>
