@@ -14,8 +14,8 @@ $ip = $_POST['ip'];
 $formattedDateTime = $_POST['formattedDateTime'];
 
 // Prepare SQL statement
-$sql = "INSERT INTO manual_inventory (partscode, partsname, verified_qty, scan_date_time, section, location, ip_address, pc_name) 
-        VALUES (:partscode, :partsname, :verified_qty, :scan_date_time, :section, :location, :ip_address, :pc_name)";
+$sql = "INSERT INTO manual_inventory (partscode, partsname, verified_qty, scan_date_time,inventory_type, section, location, ip_address, pc_name) 
+        VALUES (:partscode, :partsname, :verified_qty, :scan_date_time,:inventory_type, :section, :location, :ip_address, :pc_name)";
 
 // Prepare and execute the statement
 $stmt = $conn->prepare($sql);
@@ -24,6 +24,7 @@ $stmt->execute([
     ':partsname' => $partName,
     ':verified_qty' => $newQuantity,
     ':scan_date_time' => $formattedDateTime,
+    ':inventory_type'=> $inventoryType,
     ':section' => $section,
     ':location' => $location,
     ':ip_address' => $ip,

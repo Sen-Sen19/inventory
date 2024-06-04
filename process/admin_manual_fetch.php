@@ -33,6 +33,7 @@ try {
             echo "<td>" . $row['partscode'] . "</td>";
             echo "<td>" . $row['partsname'] . "</td>";
             echo "<td>" . $row['scan_date_time'] . "</td>";
+            echo "<td>" . $row['inventory_type'] . "</td>";
             echo "<td>" . $row['section'] . "</td>";
             echo "<td>" . $row['location'] . "</td>";
             echo "<td>" . $row['verified_qty'] . "</td>";

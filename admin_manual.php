@@ -4,7 +4,7 @@ include 'process/session.php';
 if ($role = 'admin') {
   // DO NOTHING
 } else {
-  session_unset();
+  session_unset(); 
   session_destroy();
   header('location: ../../index.php');
 }
@@ -180,206 +180,129 @@ if ($role = 'admin') {
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1>List of Manual</h1>
-            </div>
-            <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">List of Manual</li>
-              </ol>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-
-
-
-
-
-
-      <section class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <!-- left column -->
-            <div class="col-md-12">
-              <!-- general form elements -->
-              <div class="card card-primary">
-                <div class="card-header">
-                  <h3 class="card-title">
-                  </h3>
-                </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form>
-                  <div class="card-body">
-
-                    <div class="row">
-                      <div class="col-12">
-                        <div class="card">
-                          <div class="card-header">
-                            <h3 class="card-title col-12">
-                              <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-12">
-                                  <div class="float-right">
-                                    <a href="#" class="btn btn-success" onclick="export_admin_manual()">Export
-                                      Data&ensp;<i class="fas fa-download"></i></a>
-                                  </div>
-                               
-                               
-                                  <div class="float-right" style="margin-right: 20px;">
-        <a href="#" class="btn btn-warning" onclick="refreshPage()">
-            Refresh&ensp;<i class="fas fa-undo"></i>
-        </a>
-    </div>
-
-    <div style="display: flex; align-items: center;">
-    <form action="#" method="get" class="form-inline" style="display: flex;">
-        <input type="text" id="search-input" class="form-control" placeholder="Search" style="max-width: 200px;margin-right: 20px;">
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-search"></i>
-        </button>
-    </form>
-</div>
-
-
-
-
-
-
-    
-                                </div>
-                                
-                              </div>
-                            </h3>
-                          </div>
-
-
-
-
-
-                          <div class="card-body table-responsive p-0" style="height: 500px;">
-                            <table class="table table-head-fixed text-nowrap table-hover">
-                              <thead style="text-align:center;">
-                                <th>ID</th>
-                                <th>Parts Code</th>
-                                <th>Parts Name</th>
-                                <th>Date and Time</th>
-                                <th>Section</th>
-                                <th>Location</th>
-                                <th>Verified Quantity</th>
-                              </thead>
-                              <tbody id="list_of_scanned_admin" style="text-align:center;">
-                                <?php include 'process/admin_manual_fetch.php'; ?>
-                              
-                              </tbody>
-                            </table>
-                          </div>
- 
+     <div class="content-wrapper">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>List of Manual</h1>
                         </div>
-                     
-                      </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">List of Manual</li>
+                            </ol>
+                        </div>
                     </div>
+                </div>
+            </section>
 
-                  </div>
-           
-                </form>
-              </div>
- 
-            </div>
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title"></h3>
+                                </div>
+                                <form>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title col-12">
+                                                            <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                    <div class="float-right">
+                                                                        <a href="#" class="btn btn-success" onclick="export_admin_manual()">Export Data&ensp;<i class="fas fa-download"></i></a>
+                                                                    </div>
+                                                                    <div class="float-right" style="margin-right: 20px;">
+                                                                        <a href="#" class="btn btn-warning" onclick="refreshPage()">Refresh&ensp;<i class="fas fa-undo"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="card-body table-responsive p-0" style="height: 500px;">
+                                                        <table class="table table-head-fixed text-nowrap table-hover">
+                                                            <thead style="text-align:center;">
+                                                                <th>ID</th>
+                                                                <th>Parts Code</th>
+                                                                <th>Parts Name</th>
+                                                                <th>Date and Time</th>
+                                                                <th>Inventory Type</th>
+                                                                <th>Section</th>
+                                                                <th>Location</th>
+                                                                <th>Verified Quantity</th>
+                                                            </thead>
+                                                            <tbody id="list_of_scanned_admin" style="text-align:center;">
+                                                                <?php include 'process/admin_manual_fetch.php'; ?>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-          </div>
+                <div class="pagination-section">
+                    <div class="container-fluid">
+                        <div class="row justify-content-start">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <li class="page-item <?= ($current_page == 1) ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="admin_manual.php?page=<?= $current_page - 1; ?>&search=<?= htmlspecialchars($search); ?>"><<</a>
+                                    </li>
+                                    <li class="page-item active">
+                                        <span class="page-link"><?= $current_page; ?></span>
+                                    </li>
+                                    <li class="page-item <?= ($current_page == $total_pages) ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="admin_manual.php?page=<?= $current_page + 1; ?>&search=<?= htmlspecialchars($search); ?>">>></a>
+                                    </li>
+                                    <li class="page-item <?= ($current_page == $total_pages) ? 'disabled' : ''; ?>">
+                                        <a class="page-link" href="admin_manual.php?page=<?= $total_pages; ?>&search=<?= htmlspecialchars($search); ?>"><?= $total_pages; ?></a>
+                                    </li>
+                                    <div class="total-data-count" style="float: right; margin-left: 20px;">
+                                        Total Data: <?= $total_records; ?>
+                                    </div>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-<div class="pagination-section">
-  <div class="container-fluid">
-    <div class="row justify-content-start">
-      <nav aria-label="Page navigation">
-        <ul class="pagination">
-                   <!-- Current page number -->
-       
-          <li class="page-item active">
-            <span class="page-link"><?php echo $current_page; ?></span>
-          </li>
-   <!-- Previous page button -->
 
-          <li class="page-item <?php echo ($current_page == 1) ? 'disabled' : ''; ?>">
-            <a class="page-link" href="admin_manual.php?page=<?php echo $current_page - 1; ?>"><<</a>
-          </li>
- 
-          
-          <!-- Next page button -->
-          <li class="page-item <?php echo ($current_page == $total_pages) ? 'disabled' : ''; ?>">
-            <a class="page-link" href="admin_manual.php?page=<?php echo $current_page + 1; ?>">>></a>
-          </li>
-          <!-- Last page number -->
-          <li class="page-item <?php echo ($current_page == $total_pages) ? 'disabled' : ''; ?>">
-            <a class="page-link" href="admin_manual.php?page=<?php echo $total_pages; ?>"><?php echo $total_pages; ?></a>
-          </li>
-          <div class="total-data-count" style="float: right; margin-left: 20px;">
-    Total Data: <?php echo $total_records; ?>
-  </div>
-        </ul>
-        
-      </nav>
+        <footer class="main-footer">
+            <strong>Copyright &copy; 2024. Developed by: M.Omabtang</strong>
+            All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 1.0.0
+            </div>
+        </footer>
+        <?php include 'modals/logout.php'; ?>
+
+        <script src="plugins/jquery/dist/jquery.min.js"></script>
+        <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+        <script>$.widget.bridge('uibutton', $.ui.button)</script>
+        <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+        <script type="text/javascript" src="plugins/sweetalert2/dist/sweetalert2.min.js"></script>
+        <script src="dist/js/adminlte.js"></script>
+        <script type="text/javascript">
+            const export_admin_manual = () => {
+                window.open('process/export_scanned_manual.php');
+            }
+            function refreshPage() {
+                location.reload();
+            }
+        </script>
     </div>
-    
-  </div>
- 
-</div>
-
-      </section>
-      <!-- /.content -->
-    </div>
-
-
-
-
-
-    <footer class="main-footer">
-      <strong>Copyright &copy; 2024. Developed by: M.Omabtang</strong>
-      All rights reserved.
-      <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> 1.0.0
-      </div>
-    </footer>
-    <?php
-    include 'modals/logout.php';
-    ?>
-
-    <script src="plugins/jquery/dist/jquery.min.js"></script>
-
-    <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
-    
-    <script>
-      $.widget.bridge('uibutton', $.ui.button)
-    </script>
-
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-
-    <script type="text/javascript" src="plugins/sweetalert2/dist/sweetalert2.min.js"></script>
-
-    <script src="dist/js/adminlte.js"></script>
-
-    <script type="text/javascript">
-      const export_admin_manual = () => {
-        window.open('process/export_scanned_manual.php');
-      }
-      function refreshPage() {
-            location.reload();
-        }
-        
-    </script>
-
-  </body>
-
-  </html>
-
+</body>
+</html>
