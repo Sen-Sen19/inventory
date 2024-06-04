@@ -6,15 +6,15 @@
   <title>Inventory | System Manual</title>
 
   <link rel="icon" href="dist/img/logo.png" type="image/x-icon" />
-  <!-- Google Font: Source Sans Pro -->
+ 
   <link rel="stylesheet" href="dist/css/font.min.css">
-  <!-- Font Awesome -->
+
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-  <!-- Theme style -->
+  
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
-  <!-- overlayScrollbars -->
+
   <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <!-- Sweet Alert -->
+ 
   <link rel="stylesheet" href="plugins/sweetalert2/dist/sweetalert2.min.css">
     <style>
    .loader {
@@ -36,14 +36,14 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-  <!-- Preloader -->
+  
   <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="dist/img/logo.png" alt="logo" height="100" width="100">
   </div>
 
-  <!-- Navbar -->
+
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
+
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
@@ -52,7 +52,7 @@
       
     </ul>
 
-    <!-- Right navbar links -->
+
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
@@ -61,4 +61,4 @@
       </li>
     </ul>
   </nav>
-  <!-- /.navbar -->
+

@@ -16,9 +16,11 @@ include 'process/conn2.php';
 </head>
 
 <style>
-  .h1 {
-
   
+  
+  
+  
+  .h1 {
     overflow: hidden;
     width: 80%;
     max-width: 100%;
@@ -36,8 +38,6 @@ include 'process/conn2.php';
     max-width: 100%;
     margin: 50px 100px 50px 15%;
   }
-    
-  
   .form-header {
     background-color: #17a2b8;
     padding: 8px;

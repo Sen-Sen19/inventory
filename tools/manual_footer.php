@@ -1,3 +1,16 @@
+<style>
+  .main-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #f8f9fa; 
+  color:#7c7a79; 
+  padding: 10px 20px; 
+}
+
+</style>
+
 <footer class="main-footer">
     <strong>Copyright &copy; 2024. Developed by: M.N Omabtang</strong>
     All rights reserved.
