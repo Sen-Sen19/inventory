@@ -19,7 +19,7 @@ echo '
             <th>Part Code</th>
             <th>Part Name</th>
             <th>Scanned Date</th>
-           
+            <th>Inventory Type</th> 
             <th>Section</th> 
             <th>Location</th> 
             <th>IP Address</th>
@@ -38,6 +38,7 @@ if ($stmt->rowCount() > 0) {
         echo '<td>' . $j['partscode'] . '</td>';
         echo '<td>' . $j['partsname'] . '</td>';
         echo '<td>' . $j['scan_date_time'] . '</td>';
+        echo '<td>' . $j['inventory_type'] . '</td>';
         echo '<td>' . $j['section'] . '</td>';
         echo '<td>' . $j['location'] . '</td>';
         echo '<td>' . $j['ip_address'] . '</td>';
