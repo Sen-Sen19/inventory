@@ -16,7 +16,13 @@
       </p>
      </a>
     </li>
-
+    <li class="nav-item">
+     <a href="scanned_manual.php" class="nav-link  ">
+     <i class="fas fa-user-cog"></i>      <p>
+       List of Scanned
+      </p>
+     </a>
+    </li>
     <li class="nav-item">
      <a href="index.php" class="nav-link ">
       <i class="fas fa-sign-out-alt"></i>
