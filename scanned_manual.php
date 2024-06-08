@@ -53,6 +53,17 @@
             background-color: #333; /* Background color for the sticky header */
             color: #fff; /* Text color for the sticky header */
         }
+        .form1{
+
+            background-color:#f8f8f8;
+            padding:30px;
+        }
+        .form2{
+            background-color: #17a2b8;
+            padding-top:20px;
+          
+
+        }
         
     </style>
 </head>
@@ -92,6 +103,9 @@
 
 
     <!-- Content Wrapper -->
+    <div class="form2">
+    <div class="form1">
+   
     <div class="content-wrapper">
     <div class="container mt-3">
         <div class="row justify-content-between">
@@ -128,6 +142,9 @@
             </table>
         </div>
     </div>
+    </div>
+    </div>
+
 
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
