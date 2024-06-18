@@ -246,7 +246,7 @@ if ($role = 'admin') {
                     </div>
                 </div>
 
-                <div class="pagination-section">
+                <!-- <div class="pagination-section">
                     <div class="container-fluid">
                         <div class="row justify-content-start">
                             <nav aria-label="Page navigation">
@@ -270,7 +270,7 @@ if ($role = 'admin') {
                             </nav>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </section>
         </div>
 

@@ -38,7 +38,7 @@
               <div class="col-lg-4 col-md-4 col-sm-12 d-flex align-items-stretch">
                 <div class="card card-secondary w-100">
                   <div class="card-header">
-                    <h3 class="card-title text-center"><b>INVENTORY FOR INITIAL</b></h3>
+                    <h3 class="card-title col-12" style="text-align: center;"><b>INVENTORY FOR INITIAL</b></h3>
                   </div>
                   <div class="card-body d-flex justify-content-center align-items-center">
                     <a href="initial.php" class="btn btn-secondary" target="_blank">Proceed to Initial Inventory System <i class="fas fa-arrow-right"></i></a>
@@ -49,7 +49,7 @@
               <div class="col-lg-4 col-md-4 col-sm-12 d-flex align-items-stretch">
                 <div class="card card-primary w-100">
                   <div class="card-header">
-                    <h3 class="card-title text-center"><b>INVENTORY FOR FINAL</b></h3>
+                    <h3 class="card-title col-12" style="text-align: center;"><b>INVENTORY FOR FINAL</b></h3>
                   </div>
                   <div class="card-body d-flex justify-content-center align-items-center">
                     <a href="final.php" class="btn btn-primary" target="_blank">Proceed to Final Inventory System <i class="fas fa-arrow-right"></i></a>
@@ -60,7 +60,7 @@
               <div class="col-lg-4 col-md-4 col-sm-12 d-flex align-items-stretch">
                 <div class="card card-success w-100">
                   <div class="card-header">
-                    <h3 class="card-title text-center"><b>INVENTORY FOR MANUAL</b></h3>
+                    <h3 class="card-title col-12" style="text-align: center;"><b>INVENTORY FOR MANUAL</b></h3>
                   </div>
                   <div class="card-body d-flex justify-content-center align-items-center">
                     <a href="parts.php" class="btn btn-success" target="_blank">Proceed to Manual Inventory System <i class="fas fa-arrow-right"></i></a>

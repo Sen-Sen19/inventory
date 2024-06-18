@@ -4,7 +4,7 @@ include 'conn.php';
 
 $method = isset($_POST["method"]) ? $_POST["method"] : '';
 $search = isset($_POST["search"]) ? $_POST["search"] : '';
-$records_per_page = 30;
+$records_per_page = 10000;
 $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
 if ($current_page <= 0) {

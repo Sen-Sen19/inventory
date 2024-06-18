@@ -57,10 +57,12 @@
 
             background-color:#f8f8f8;
             padding:30px;
+           
         }
         .form2{
             background-color: #17a2b8;
             padding-top:20px;
+            
           
 
         }
@@ -180,8 +182,8 @@
 
 
 
-    <script>
-   document.addEventListener('DOMContentLoaded', function() {
+<script>
+document.addEventListener('DOMContentLoaded', function() {
     // Initialize modal instance
     const modalElement = document.getElementById('myModal');
     const modal = new bootstrap.Modal(modalElement);
@@ -194,48 +196,33 @@
     }
 
     // Function to fetch and update table data
-    function updateTableData(page) {
-    fetch('process/admin_manual_fetch.php?page=' + page)
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('list_of_scanned_admin').innerHTML = data;
-            attachRowClickEvent(); // Reattach event listeners after updating table data
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
-}
-
-// Handle pagination click event
-function handlePaginationClick(page) {
-    updateTableData(page);
-}
-
-// Add event listeners to pagination links
-document.querySelectorAll('.pagination-link').forEach(link => {
-    link.addEventListener('click', function(event) {
-        event.preventDefault();
-        const page = this.dataset.page;
-        handlePaginationClick(page);
-    });
-});
+    function updateTableData() {
+        fetch('process/admin_manual_fetch.php')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('list_of_scanned_admin').innerHTML = data;
+                attachRowClickEvent(); // Reattach event listeners after updating table data
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }
 
     // Function to attach click event to table rows
     function attachRowClickEvent() {
-    const table = document.getElementById('list_of_scanned_admin');
-    table.addEventListener('click', function(event) {
-        const target = event.target;
-        if (target.tagName === 'TD') {
-            const row = target.parentNode;
-            const cells = row.getElementsByTagName('td');
-            const partCode = cells[1].innerText;
-            const partName = cells[2].innerText;
-            document.getElementById('partCode').value = partCode;
-            document.getElementById('partName').value = partName;
-            modal.show();
-        }
-    });
-}
+        const rows = document.querySelectorAll('#list_of_scanned_admin tr');
+        rows.forEach(row => {
+            row.addEventListener('click', function() {
+                const cells = row.getElementsByTagName('td');
+                const partCode = cells[1].innerText;
+                const partName = cells[2].innerText;
+                document.getElementById('partCode').value = partCode;
+                document.getElementById('partName').value = partName;
+                modal.show();
+            });
+        });
+    }
+
     // Initial attachment of event listeners
     attachRowClickEvent();
 
@@ -278,31 +265,42 @@ document.querySelectorAll('.pagination-link').forEach(link => {
                 console.error('Error:', error);
             });
     });
-});
-const Search = () => {
-    var search = document.getElementById('searchInput').value.trim();
-    $.ajax({
-        type: "POST",
-        url: "process/admin_manual_fetch.php",
-        data: {
-            method: "Search",
-            search: search
-        },
-        success: function (response) {
-            document.getElementById('list_of_scanned_admin').innerHTML = response;
-            attachRowClickEvent(); // Reattach event listeners after updating table content
-        },
-        error: function (xhr, status, error) {
-            console.error(xhr.responseText);
-        }
-    });
-}
-function refreshPage() {
-                location.reload();
+
+    // Function to handle search
+    const searchButton = document.getElementById('searchButton');
+    searchButton.addEventListener('click', Search);
+
+    // Function to refresh page
+    const refreshButton = document.querySelector('.btn.btn-warning');
+    refreshButton.addEventListener('click', refreshPage);
+
+    // Function to handle search
+    function Search() {
+        var search = document.getElementById('searchInput').value.trim();
+        $.ajax({
+            type: "POST",
+            url: "process/admin_manual_fetch.php",
+            data: {
+                method: "Search",
+                search: search
+
+            },
+
+            success: function(response) {
+                document.getElementById('list_of_scanned_admin').innerHTML = response;
+                attachRowClickEvent(); // Reattach event listeners after updating table data
             }
-    
+        });
+    }
+});
+
+function refreshPage() {
+    location.reload();
+}
+
 
 </script>
+
 
 </body>
 </html>
