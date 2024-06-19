@@ -90,179 +90,225 @@
 
 
 <script>
-   function handleKeyPress(event) {
-      if (event.key === 'Enter') {
-         event.preventDefault();
-         const partCode = document.getElementById('part-code').value;
-         if (partCode) {
-            fetchPartData(partCode);
-         }
-      }
-   }
+$(document).ready(function () {
+    // Initialize save button as disabled
+    $('#save-btn').prop('disabled', true);
+    $('#part-code').prop('disabled', true);
 
-   function fetchPartData(partCode) {
-      $.ajax({
-         url: 'process/fetch_part_data.php',
-         type: 'POST',
-         data: { part_code: partCode },
-         success: function (response) {
-            const data = JSON.parse(response);
-            if (data.length > 0) {
-               const partName = data[0].parts_name;
-               const quantity = data[0].quantity;
-
-               $('#part-name').val(partName);
-               $('#quantity').val(quantity);
-               validateForm();
-            } else {
-               $('#part-name').val('');
-               $('#quantity').val('');
-               validateForm();
-               Swal.fire({
-                  icon: 'info',
-                  title: 'Part Code not found!',
-                  showConfirmButton: false,
-                  timer: 1500
-               })
-            }
-         },
-         error: function (xhr, status, error) {
-            console.error(xhr.responseText);
-            alert('Error fetching part data.');
-         }
-      });
-   }
-
-   function validateForm() {
-      const partName = $('#part-name').val().trim();
-      const quantity = $('#quantity').val().trim();
-      const inventoryType = $('#inventory_type').val();
-      const section = $('#section_initial2').val();
-      const location = $('#location_name_initial2').val();
-
-
-      if (partName !== '' && quantity !== '' && inventoryType !== '' && section !== '' && location !== '') {
-         $('#save-btn').prop('disabled', false);
-      } else {
-         $('#save-btn').prop('disabled', true);
-      }
-   }
-
-   $(document).ready(function () {
-
-      $('#save-btn').prop('disabled', true);
-      $('#part-code').prop('disabled', true);
-
-      $('#location_name_initial2').change(function () {
-         const locationSelected = $(this).val();
-         if (locationSelected) {
+    // Enable part-code input when location is selected
+    $('#location_name_initial2').change(function () {
+        const locationSelected = $(this).val();
+        if (locationSelected) {
             $('#part-code').prop('disabled', false);
             validateForm();
-         } else {
+        } else {
             $('#part-code').prop('disabled', true);
             $('#save-btn').prop('disabled', true);
-         }
-      });
+        }
+    });
 
-      $('#part-name, #quantity').on('input', validateForm);
+    // Validate form on input change
+    $('#part-name, #quantity').on('input', validateForm);
 
-      $('#save-btn').click(function () {
-         const partCode = document.getElementById('part-code').value;
-         const partName = document.getElementById('part-name').value;
-         const newQuantity = document.getElementById('quantity').value;
+    // Handle save button click
+    $('#save-btn').click(function () {
+        const partCode = $('#part-code').val();
+        const partName = $('#part-name').val();
+        const newQuantity = $('#quantity').val();
+        const inventoryType = $('#inventory_type').val();
+        const section = $('#section_initial2').val();
+        const location = $('#location_name_initial2').val();
+        const pcname = $('#pcname').val();
+        const ip = $('#ip').val();
+        const now = new Date();
+        const formattedDateTime = now.toLocaleString();
 
-         const inventoryType = $('#inventory_type').val();
-         const section = $('#section_initial2').val();
-         const location = $('#location_name_initial2').val();
-
-         const pcname = $('#pcname').val();
-         const ip = $('#ip').val();
-
-         const now = new Date();
-         const formattedDateTime = now.toLocaleString();
-
-         if (isNaN(newQuantity) || newQuantity === '') {
+        // Validate quantity input
+        if (isNaN(newQuantity) || newQuantity === '') {
             Swal.fire({
-               icon: 'error',
-               title: 'Invalid Quantity',
-               showConfirmButton: false,
-               timer: 1500
+                icon: 'error',
+                title: 'Invalid Quantity',
+                showConfirmButton: false,
+                timer: 1500
             });
             return;
-         }
+        }
 
-         $.ajax({
-            url: 'process/save_to_database.php',
+        // Check if part code already exists in the database
+        $.ajax({
+            url: 'process/check_part_code.php',
             method: 'POST',
-            data: {
-               partCode: partCode,
-               partName: partName,
-               newQuantity: newQuantity,
-               inventoryType: inventoryType,
-               section: section,
-               location: location,
-               pcname: pcname,
-               ip: ip,
-               formattedDateTime: formattedDateTime
-            },
+            data: { partCode: partCode },
+            dataType: 'json',
             success: function (response) {
-
-               console.log(response);
-
-               Swal.fire({
-                  icon: 'success',
-                  title: 'Successfully Recorded',
-                  showConfirmButton: false,
-                  timer: 1500
-               }).then(() => {
-                  const newRow = `<tr data-part-code="${partCode}">
-                         <td>${partCode}</td>
-                         <td>${partName}</td>
-                         <td>${newQuantity}</td>
-                         <td>${inventoryType}</td>
-                         <td>${section}</td>
-                         <td>${location}</td>
-                         <td>${pcname}</td>
-                         <td>${ip}</td>
-                         <td>${formattedDateTime}</td>
-                         </tr>`;
-                  $(`#saved-data tr[data-part-code="${partCode}"]`).remove();
-                  $('#saved-data').prepend(newRow);
-               });
+                if (response.exists) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Part Code already exists',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                } else if (response.error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: response.error,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                } else {
+                    // Save data if part code does not exist
+                    savePartData({
+                        partCode: partCode,
+                        partName: partName,
+                        newQuantity: newQuantity,
+                        inventoryType: inventoryType,
+                        section: section,
+                        location: location,
+                        pcname: pcname,
+                        ip: ip,
+                        formattedDateTime: formattedDateTime
+                    });
+                }
             },
             error: function (xhr, status, error) {
-
-               console.error(xhr.responseText);
-               alert('Error saving data to database.');
+                console.error(xhr.responseText);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error checking part code.',
+                    text: xhr.responseText,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             }
-         });
-      });
+        });
+    });
 
+    // Handle clear button click
+    $('#clear-btn').click(function () {
+        clearForm();
+    });
+});
 
-      $('#clear-btn').click(function () {
+// Save part data to the database
+function savePartData(data) {
+    $.ajax({
+        url: 'process/save_to_database.php',
+        method: 'POST',
+        data: data,
+        success: function (response) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Successfully Recorded',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                const newRow = `<tr data-part-code="${data.partCode}">
+                    <td>${data.partCode}</td>
+                    <td>${data.partName}</td>
+                    <td>${data.newQuantity}</td>
+                    <td>${data.inventoryType}</td>
+                    <td>${data.section}</td>
+                    <td>${data.location}</td>
+                    <td>${data.pcname}</td>
+                    <td>${data.ip}</td>
+                    <td>${data.formattedDateTime}</td>
+                </tr>`;
+                $(`#saved-data tr[data-part-code="${data.partCode}"]`).remove();
+                $('#saved-data').prepend(newRow);
 
-         $('#part-code').val('');
-         $('#part-name').val('');
-         $('#quantity').val('');
+                clearForm();
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error saving data to database.',
+                text: xhr.responseText,
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    });
+}
 
+// Clear form inputs
+function clearForm() {
+    $('#part-code').val('');
+    $('#part-name').val('');
+    $('#quantity').val('');
+    $('#inventory_type').val('');
+    $('#section_initial2').val('');
+    $('#location_name_initial2').val('');
+    $('#saved-data').empty();
+    validateForm();
+}
 
-         $('#inventory_type').val('');
+// Handle enter key press for part-code input
+function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        const partCode = document.getElementById('part-code').value;
+        if (partCode) {
+            fetchPartData(partCode);
+        }
+    }
+}
 
+// Fetch part data based on part code
+function fetchPartData(partCode) {
+    $.ajax({
+        url: 'process/fetch_part_data.php',
+        type: 'POST',
+        data: { part_code: partCode },
+        success: function (response) {
+            const data = JSON.parse(response);
+            if (data.length > 0) {
+                const partName = data[0].parts_name;
+                const quantity = data[0].quantity;
+                $('#part-name').val(partName);
+                $('#quantity').val(quantity);
+                validateForm();
+            } else {
+                $('#part-name').val('');
+                $('#quantity').val('');
+                validateForm();
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Part Code not found!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error fetching part data.',
+                text: xhr.responseText,
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    });
+}
 
-         $('#section_initial2').val('');
-         $('#location_name_initial2').val('');
+// Validate form fields
+function validateForm() {
+    const partName = $('#part-name').val().trim();
+    const quantity = $('#quantity').val().trim();
+    const inventoryType = $('#inventory_type').val();
+    const section = $('#section_initial2').val();
+    const location = $('#location_name_initial2').val();
 
+    if (partName !== '' && quantity !== '' && inventoryType !== '' && section !== '' && location !== '') {
+        $('#save-btn').prop('disabled', false);
+    } else {
+        $('#save-btn').prop('disabled', true);
+    }
+}
 
-         $('#saved-data').empty();
-
-
-         $('#inventory_type').prop('disabled', false);
-         $('#part-name').prop('disabled', false);
-
-
-         validateForm();
-      });
-   });
 </script>
 
 
