@@ -160,6 +160,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="updateForm">
+
                         <div class="form-group">
                             <label for="partCode">Part Code</label>
                             <input type="text" class="form-control" id="partCode" readonly>
@@ -167,6 +168,10 @@
                         <div class="form-group">
                             <label for="partName">Part Name</label>
                             <input type="text" class="form-control" id="partName" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">location</label>
+                            <input type="text" class="form-control" id="location" readonly>
                         </div>
                         <div class="form-group">
                             <label for="quantity">Quantity</label>
@@ -190,6 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to clear modal content
     function clearModal() {
+        document.getElementById('location').value = '';
         document.getElementById('partCode').value = '';
         document.getElementById('partName').value = '';
         document.getElementById('quantity').value = '';
@@ -214,8 +220,10 @@ document.addEventListener('DOMContentLoaded', function() {
         rows.forEach(row => {
             row.addEventListener('click', function() {
                 const cells = row.getElementsByTagName('td');
+                const location = cells[6].innerText;
                 const partCode = cells[1].innerText;
                 const partName = cells[2].innerText;
+                document.getElementById('location').value = location;
                 document.getElementById('partCode').value = partCode;
                 document.getElementById('partName').value = partName;
                 modal.show();
@@ -230,8 +238,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('updateForm');
     form.addEventListener('submit', function(event) {
         event.preventDefault();
+       
         const partCode = document.getElementById('partCode').value;
         const partName = document.getElementById('partName').value;
+        const location = document.getElementById('location').value;
         const quantity = document.getElementById('quantity').value;
         fetch('process/update_record.php', {
                 method: 'POST',
@@ -239,6 +249,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
+                    location: location,
                     partCode: partCode,
                     partName: partName,
                     quantity: quantity,
