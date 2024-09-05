@@ -3,7 +3,7 @@ include 'conn5.php'; // Include the MySQL connection file
 include 'conn2.php';
 
 // SQL Server database connection
-$pdo_sql_server = new PDO('sqlsrv:Server=172.25.114.162\\SQLEXPRESS;Database=new_ekanban', 'SA', 'SystemGroup2018');
+$pdo_sql_server = new PDO('sqlsrv:Server=172.25.116.188;Database=new_ekanban', 'SA', 'SystemGroup@2022');
 
 if (isset($_POST['part_code'])) {
     $part_code = $_POST['part_code'];

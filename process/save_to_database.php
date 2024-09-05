@@ -1,6 +1,7 @@
 <?php
-
 require_once 'conn.php';
+
+include 'remote.php'; // Remote / Client PC Info
 
 $partCode = $_POST['partCode'];
 $partName = $_POST['partName'];
@@ -8,8 +9,8 @@ $newQuantity = $_POST['newQuantity'];
 $inventoryType = $_POST['inventoryType'];
 $section = $_POST['section'];
 $location = $_POST['location'];
-$pcname = $_POST['pcname'];
-$ip = $_POST['ip'];
+$ip = $_SESSION['ip'];
+$pcname = $_SESSION['pc_name'];
 $formattedDateTime = $_POST['formattedDateTime'];
 
 try {
