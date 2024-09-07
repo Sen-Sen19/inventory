@@ -1,319 +1,288 @@
 <?php include 'tools/navbar_manual.php'; ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventory</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-        }
-
-        .main-sidebar {
-            width: 250px; /* Default width */
-            transition: width 0.3s;
-        }
-
-        .main-sidebar.minimized {
-            width: 80px; /* Minimized width */
-        }
-
-        .content-wrapper {
-            transition: margin-left 0.3s;
-            margin-left: 250px; /* Default margin to accommodate the sidebar */
-             /* Adjust the top margin */
-        }
-
-        .content-wrapper.minimized {
-            margin-left: 80px; /* Adjusted margin for minimized sidebar */
-        }
-
-        .table-responsive {
-            overflow-x: auto;
-        }
-
-        /* Additional styling */
-        .brand-link, .nav-link, .card-body, .table {
-            font-family: Arial, sans-serif;
-        }
-        #searchButton {
-        background-color: #007bff; /* Blue color */
-        color: #fff;
+<style>
+    .custom-modal {
+        display: none;
+        position: fixed;
+        z-index: 1050;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
     }
 
-    #searchButton:hover {
-        background-color: #0056b3; /* Darker blue on hover */
+    .custom-modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 90%;
+        max-width: 600px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
-    .thead-sticky {
-            position: sticky;
-            top: 0;
-            z-index: 1; /* Ensure the header appears above the table content */
-            background-color: #333; /* Background color for the sticky header */
-            color: #fff; /* Text color for the sticky header */
-        }
-        .form1{
 
-            background-color:#f8f8f8;
-            padding:30px;
-           
-        }
-        .form2{
-            background-color: #17a2b8;
-            padding-top:20px;
-            
-          
+    .custom-close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
 
+    .custom-close:hover,
+    .custom-close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+
+    @media screen and (max-width: 768px) {
+        .custom-modal-content {
+            width: 95%;
+            margin: 10% auto;
         }
-        
-    </style>
-</head>
-<body>
-    <!-- Sidebar -->
-    <aside class="main-sidebar sidebar-dark-info elevation-4">
-        <a href="#" class="brand-link" id="sidebarToggle">
-            <img src="dist/img/logo.ico" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">Inventory (Manual)</span>
-        </a>
-        <div class="sidebar">
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <li class="nav-item">
-                        <a href="parts.php" class="nav-link">
-                            <i class="fa fa-barcode"></i>
-                            <p>Parts</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="scanned_manual.php" class="nav-link active">
-                            <i class="fas fa-user-cog"></i>
-                            <p>List of Scanned</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="index.php" class="nav-link">
-                            <i class="fas fa-sign-out-alt"></i>
-                            <p>Menu</p>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+
+        .custom-close {
+            font-size: 24px;/
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .custom-modal-content {
+            width: 100%;
+            margin: 15% auto;
+        }
+
+        .custom-close {
+            font-size: 20px;
+        }
+    }
+</style>
+<aside class="main-sidebar sidebar-dark-info elevation-4">
+    <a href="#" class="brand-link" id="sidebarToggle">
+        <img src="dist/img/logo.ico" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">Inventory (Manual)</span>
+    </a>
+    <div class="sidebar">
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item">
+                    <a href="parts.php" class="nav-link">
+                        <i class="fa fa-barcode"></i>
+                        <p>Parts</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="scanned_manual.php" class="nav-link active">
+                        <i class="fas fa-user-cog"></i>
+                        <p>List of Scanned</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.php" class="nav-link">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <p>Menu</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</aside>
+
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+
+                </div>
+            </div>
         </div>
-    </aside>
-
-
-
-    <!-- Content Wrapper -->
-    <div class="form2">
-    <div class="form1">
-   
-    <div class="content-wrapper">
-    <div class="container mt-3">
-        <div class="row justify-content-between">
-            <div class="col-md-4">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Search by Part Code" id="searchInput">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" onclick="Search()" id="searchButton"><i class="fas fa-search"></i></button>
+    </div>
+    <section class="content">
+        <div class="col-sm-12">
+            <div class="card card-gray-dark card-outline">
+                <div class="card-header">
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="maximize">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6 col-sm-3">
+                                    <label style="font-weight: bold;">Search Partcode</label>
+                                    <input id="spartname" class="form-control" name="shift" type="text"
+                                        placeholder="Enter Parts Code..." style="height: 31px; font-size: 14px;">
+                                </div>
+                                <div class="col-6 col-sm-2">
+                                    <label style="visibility:hidden;">Search</label>
+                                    <button class="btn btn-primary btn-block btn-sm" id="searchBtn">
+                                        <i class="fas fa-search"></i> Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
+                        <table class="table table-bordered" style="border-collapse: collapse;">
+                            <thead
+                                style="position: sticky; top: 0; background-color:#696a6a; color: white; z-index: 10;">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Part Code</th>
+                                    <th>Part Name</th>
+                                    <th>Scan Date/Time</th>
+                                    <th>Inventory Type</th>
+                                    <th>Section</th>
+                                    <th>Location</th>
+                                    <th>Verified Qty</th>
+                                </tr>
+                            </thead>
+                            <tbody id="data-table-body">
+                                <?php include 'process/manual_fetch.php'; ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 text-right">
-                <a href="#" class="btn btn-warning" onclick="refreshPage()">Refresh <i class="fas fa-undo"></i></a>
+        </div>
+    </section>
+</div>
+
+<div id="customModal" class="custom-modal">
+    <div class="custom-modal-content">
+        <span class="custom-close">&times;</span>
+
+        <form id="modalForm">
+            <div class="mb-3">
+                <label for="partName" class="form-label"><strong>Part Name:</strong></label>
+                <p id="modalPartName" class="form-control-plaintext"></p>
             </div>
-        </div>
-    </div>
-    <div class="card-body table-responsive p-0" style="height: 70vh;">
-    <table class="table table-striped table-bordered table-hover table-sm">
-                <thead class="thead-dark text-center thead-sticky">
-                    <tr>
-                        <th>ID</th>
-                        <th>Parts Code</th>
-                        <th>Parts Name</th>
-                        <th>Date and Time</th>
-                        <th>Inventory Type</th>
-                        <th>Section</th>
-                        <th>Location</th>
-                        <th>Verified Quantity</th>
-                    </tr>
-                </thead>
-                <tbody id="list_of_scanned_admin" class="text-center">
-                    <?php include 'process/admin_manual_fetch.php'; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    </div>
-    </div>
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Update Quantity</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="updateForm">
-
-                        <div class="form-group">
-                            <label for="partCode">Part Code</label>
-                            <input type="text" class="form-control" id="partCode" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="partName">Part Name</label>
-                            <input type="text" class="form-control" id="partName" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="quantity">location</label>
-                            <input type="text" class="form-control" id="location" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="quantity">Quantity</label>
-                            <input type="number" class="form-control" id="quantity">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </form>
-                </div>
+            <div class="mb-3">
+                <label for="partCode" class="form-label"><strong>Part Code:</strong></label>
+                <p id="modalPartCode" class="form-control-plaintext"></p>
             </div>
-        </div>
+            <div class="mb-3">
+                <label for="location" class="form-label"><strong>Location:</strong></label>
+                <p id="modalLocation" class="form-control-plaintext"></p>
+            </div>
+            <div class="mb-3">
+                <label for="quantity" class="form-label"><strong>Quantity:</strong></label>
+                <input type="number" class="form-control" id="modalQuantity" min="0" step="1">
+            </div>
+        </form>
+        <button type="button" class="btn btn-success" id="saveChanges">Update</button>
+        <button type="button" class="btn btn-secondary" id="closeModal">Cancel</button>
     </div>
-<!-- Pagination -->
-
+</div>
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize modal instance
-    const modalElement = document.getElementById('myModal');
-    const modal = new bootstrap.Modal(modalElement);
-
-    // Function to clear modal content
-    function clearModal() {
-        document.getElementById('location').value = '';
-        document.getElementById('partCode').value = '';
-        document.getElementById('partName').value = '';
-        document.getElementById('quantity').value = '';
-    }
-
-    // Function to fetch and update table data
-    function updateTableData() {
-        fetch('process/admin_manual_fetch.php')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('list_of_scanned_admin').innerHTML = data;
-                attachRowClickEvent(); // Reattach event listeners after updating table data
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    }
-
-    // Function to attach click event to table rows
-    function attachRowClickEvent() {
-        const rows = document.querySelectorAll('#list_of_scanned_admin tr');
-        rows.forEach(row => {
-            row.addEventListener('click', function() {
-                const cells = row.getElementsByTagName('td');
-                const location = cells[6].innerText;
-                const partCode = cells[1].innerText;
-                const partName = cells[2].innerText;
-                document.getElementById('location').value = location;
-                document.getElementById('partCode').value = partCode;
-                document.getElementById('partName').value = partName;
-                modal.show();
-            });
+    document.addEventListener('DOMContentLoaded', function () {
+        const tableBody = document.getElementById('data-table-body');
+        const modal = document.getElementById('customModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const saveChangesBtn = document.getElementById('saveChanges');
+        tableBody.addEventListener('click', function (event) {
+            const clickedRow = event.target.closest('tr');
+            if (clickedRow) {
+                const partName = clickedRow.cells[2].textContent;
+                const partCode = clickedRow.cells[1].textContent;
+                const location = clickedRow.cells[6].textContent;
+                const quantity = clickedRow.cells[7].textContent;
+                document.getElementById('modalPartName').textContent = partName;
+                document.getElementById('modalPartCode').textContent = partCode;
+                document.getElementById('modalLocation').textContent = location;
+                document.getElementById('modalQuantity').value = quantity;
+                modal.style.display = 'block';
+                window.clickedRow = clickedRow;
+            }
         });
-    }
+        closeModalBtn.addEventListener('click', function () {
+            modal.style.display = 'none';
+        });
+        saveChangesBtn.addEventListener('click', function () {
 
-    // Initial attachment of event listeners
-    attachRowClickEvent();
+            const partCode = document.getElementById('modalPartCode').textContent;
+            const newQuantity = document.getElementById('modalQuantity').value;
 
-    // Handle form submission
-    const form = document.getElementById('updateForm');
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-       
-        const partCode = document.getElementById('partCode').value;
-        const partName = document.getElementById('partName').value;
-        const location = document.getElementById('location').value;
-        const quantity = document.getElementById('quantity').value;
-        fetch('process/update_record.php', {
+
+            if (newQuantity === '' || newQuantity < 0) {
+                Swal.fire({
+                    title: 'Invalid Input',
+                    text: 'Please enter a valid quantity.',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 500
+                });
+                return;
+            }
+            fetch('process/manual_update.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    location: location,
                     partCode: partCode,
-                    partName: partName,
-                    quantity: quantity,
+                    quantity: newQuantity,
+                    location: document.getElementById('modalLocation').textContent,
                 }),
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Quantity updated successfully!',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+
+                            if (window.clickedRow) {
+                                window.clickedRow.cells[7].textContent = newQuantity;
+                            }
+                            modal.style.display = 'none';
+                            // window.location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Failed',
+                            text: 'Failed to update the quantity. Please try again.',
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
                     Swal.fire({
-                        icon: 'success',
-                        title: 'Save',
+                        title: 'Error',
+                        text: 'An unexpected error occurred.',
+                        icon: 'error',
                         showConfirmButton: false,
                         timer: 1500
-                    }).then(() => {
-                        modal.hide();
-                        clearModal();
-                        updateTableData();
                     });
-                } else {
-                    console.error(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    });
-
-    // Function to handle search
-    const searchButton = document.getElementById('searchButton');
-    searchButton.addEventListener('click', Search);
-
-    // Function to refresh page
-    const refreshButton = document.querySelector('.btn.btn-warning');
-    refreshButton.addEventListener('click', refreshPage);
-
-    // Function to handle search
-    function Search() {
-        var search = document.getElementById('searchInput').value.trim();
-        $.ajax({
-            type: "POST",
-            url: "process/admin_manual_fetch.php",
-            data: {
-                method: "Search",
-                search: search
-
-            },
-
-            success: function(response) {
-                document.getElementById('list_of_scanned_admin').innerHTML = response;
-                attachRowClickEvent(); // Reattach event listeners after updating table data
-            }
+                });
         });
-    }
-});
-
-function refreshPage() {
-    location.reload();
-}
-
-
+        window.onclick = function (event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+    });
 </script>
 
 
-</body>
-</html>
 
 <?php include 'tools/manual_scanned_footer.php'; ?>
